@@ -34,6 +34,7 @@
 8. How many arguments does setState take and why is it async.
 
 - Two arguments: the first is the new state or the updater function and the second is a callback.
+- setState is asynchronous because React may call multiple setStates at the same time to improve performance.
 
 9.  <strong>List the steps needed to migrate a Class to Function Component.</strong>
 
