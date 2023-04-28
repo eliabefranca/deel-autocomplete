@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from '../../lib/debounce';
 import AutoCompleteItem from '../AutocompleteItem';
 import AutoCompleteOverlay from '../AutocompleteOverlay';
@@ -34,7 +34,7 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
   const [active, setActive] = useState(false);
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [term, setTerm] = useState('');
-  const refInput = useRef<HTMLInputElement>(null);
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const term = event.target.value;
@@ -73,19 +73,29 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
 
   const shouldShowResults = results.length > 0 && !error;
   const shouldShowEmptyResultsMessage = results.length === 0 && !error;
+  const refInput = useRef<HTMLInputElement>(null);
+
+  // cleaning the timeout when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   return (
     <div className="Autocomplete">
       <label>{labelText}</label>
       <input
         role="textbox"
-        aria-label="Autocomplete Input"
+        aria-label={labelText}
         onFocus={() => setActive(true)}
         placeholder={placeholderText}
         data-testid="autocomplete-input"
         onChange={handleInputChange}
         onBlur={() => {
-          setTimeout(() => setActive(false), 200);
+          setTimeoutId(window.setTimeout(() => setActive(false), 200));
         }}
         value={term}
         ref={refInput}
@@ -111,7 +121,7 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
               {results.map(({ title, image }, index) => (
                 <AutoCompleteItem
                   highlighted={term}
-                  key={index}
+                  key={`${title}-${image}`}
                   title={title}
                   image={image}
                   handleClick={() => handleAutoCompleteItemClick(title)}

@@ -46,7 +46,7 @@ describe('Autocomplete', () => {
       );
 
       const label = screen.getByText(/Any Label Text/);
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
 
       expect(label).toBeInTheDocument();
       expect(input).toHaveAttribute('placeholder', 'Any Placeholder Text');
@@ -54,7 +54,7 @@ describe('Autocomplete', () => {
   });
 
   describe('User interactions', () => {
-    it('should show an error message when the fetchFunction throws an error', async () => {
+    it('shows an error message when the fetchFunction throws an error', async () => {
       render(
         <Autocomplete
           fetchFunction={mockedFetchFunction}
@@ -63,7 +63,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'term_that_throws_an_error');
 
       await waitFor(() => {
@@ -73,7 +73,7 @@ describe('Autocomplete', () => {
       });
     });
 
-    it('should set error to false when the user types again after an error occurred', async () => {
+    it('sets error to false when the user types again after an error occurred', async () => {
       render(
         <Autocomplete
           fetchFunction={mockedFetchFunction}
@@ -82,7 +82,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'term_that_throws_an_error');
 
       await waitFor(() => {
@@ -100,7 +100,7 @@ describe('Autocomplete', () => {
       });
     });
 
-    it('shows results when the user types', async () => {
+    it('shows the results when the user types', async () => {
       render(
         <Autocomplete
           fetchFunction={mockedFetchFunction}
@@ -109,7 +109,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'any_search_term');
 
       await waitFor(() => {
@@ -132,7 +132,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'term_that_returns_no_results');
 
       await waitFor(() => {
@@ -149,7 +149,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'any_search_term');
 
       await waitFor(() => {
@@ -171,7 +171,7 @@ describe('Autocomplete', () => {
         />
       );
 
-      const input = screen.getByRole('textbox', { name: 'Autocomplete Input' });
+      const input = screen.getByRole('textbox', { name: 'Any Label Text' });
       userEvent.type(input, 'any_search_term');
 
       await waitFor(() => {

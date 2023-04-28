@@ -22,7 +22,11 @@ const AutocompleteItem: React.FC<AutocompleteItemProps> = ({
   }
 
   return (
-    <div className="AutocompleteItem" onClick={handleClick}>
+    <div
+      data-testid="autocomplete-item"
+      className="AutocompleteItem"
+      onClick={handleClick}
+    >
       {image && (
         <div className="photo">
           <img src={image} alt={title} />
