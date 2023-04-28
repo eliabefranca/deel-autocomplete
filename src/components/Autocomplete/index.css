@@ -1,0 +1,18 @@
+.Autocomplete {
+  margin-bottom: 2rem;
+}
+
+.Autocomplete input {
+  position: relative;
+  z-index: 1;
+}
+
+.Autocomplete [data-testid='autocomplete-error'] {
+  color: #f00;
+  text-align: center;
+}
+
+.Autocomplete [data-testid='autocomplete-no-results'] {
+  color: #494949b2;
+  text-align: center;
+}

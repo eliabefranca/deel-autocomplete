@@ -1,0 +1,31 @@
+.AutocompleteItem {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  position: relative;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.AutocompleteItem .photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100px;
+  height: 100%;
+  border: 1px solid #333;
+}
+
+.AutocompleteItem img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.AutocompleteItem .title {
+  color: #7e7e7e;
+}
+
+.AutocompleteItem .title strong {
+  color: #333;
+}

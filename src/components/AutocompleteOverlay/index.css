@@ -1,0 +1,29 @@
+.AutocompleteOverlay {
+  position: relative;
+  z-index: 2;
+}
+
+.AutocompleteOverlay .background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.AutocompleteOverlay .content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0.5rem;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #fff;
+  border: 1px solid #333;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
