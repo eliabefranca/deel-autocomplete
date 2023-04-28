@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { debounce } from '../../lib/debounce';
 import AutoCompleteItem from '../AutocompleteItem';
 import AutoCompleteOverlay from '../AutocompleteOverlay';
@@ -34,6 +34,7 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
   const [active, setActive] = useState(false);
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [term, setTerm] = useState('');
+  const refInput = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const term = event.target.value;
@@ -87,10 +88,14 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
           setTimeout(() => setActive(false), 200);
         }}
         value={term}
+        ref={refInput}
       />
 
       {active && (
-        <AutoCompleteOverlay onClose={() => setActive(false)}>
+        <AutoCompleteOverlay
+          onClose={() => setActive(false)}
+          refInput={refInput}
+        >
           {error && (
             <div data-testid="autocomplete-error">
               Error while fetching the data
