@@ -34,18 +34,21 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
   const [active, setActive] = useState(false);
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [term, setTerm] = useState('');
+  const [userIsTyping, setUserIsTyping] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const term = event.target.value;
     setError(false);
     setTerm(term);
+    setResults([]);
 
     if (!term) {
-      setResults([]);
+      setUserIsTyping(false);
       return;
     }
 
+    setUserIsTyping(true);
     debouncedFetchFunction(term);
   };
 
@@ -57,10 +60,17 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
       try {
         const data = await fetchFunction(search);
         const filteredAndSortedData = filterAndSortResults(search, data);
-        setResults(filteredAndSortedData);
+
+        // compare the current input value with the search term
+        // to make sure the results are from the last search
+        if (refInput.current?.value === search) {
+          setResults(filteredAndSortedData);
+        }
       } catch (err) {
         setError(true);
       }
+
+      setUserIsTyping(false);
     }, DEBOUNCE_TIME),
     [fetchFunction]
   );
@@ -71,8 +81,10 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
     setActive(false);
   };
 
+  const shouldShowLoadingMessage = userIsTyping && !error;
+  const shouldShowEmptyResultsMessage =
+    !userIsTyping && results.length === 0 && !error;
   const shouldShowResults = results.length > 0 && !error;
-  const shouldShowEmptyResultsMessage = results.length === 0 && !error;
   const refInput = useRef<HTMLInputElement>(null);
 
   // cleaning the timeout when the component unmounts
@@ -116,9 +128,15 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
             <div data-testid="autocomplete-no-results">No results</div>
           )}
 
+          {shouldShowLoadingMessage && (
+            <div data-testid="autocomplete-loading">
+              Fetching the results...
+            </div>
+          )}
+
           {shouldShowResults && (
             <>
-              {results.map(({ title, image }, index) => (
+              {results.map(({ title, image }) => (
                 <AutoCompleteItem
                   highlighted={term}
                   key={`${title}-${image}`}

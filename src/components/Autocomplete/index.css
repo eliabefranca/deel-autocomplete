@@ -8,12 +8,12 @@
   z-index: 3;
 }
 
-.Autocomplete [data-testid='autocomplete-error'] {
+.AutocompleteOverlay [data-testid='autocomplete-error'] {
   color: #f00;
   text-align: center;
 }
 
-.Autocomplete [data-testid='autocomplete-no-results'] {
+.AutocompleteOverlay [data-testid='autocomplete-no-results'] {
   color: #494949b2;
   text-align: center;
 }
