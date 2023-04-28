@@ -66,8 +66,8 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
 
   const handleAutoCompleteItemClick = (title: string) => {
     setTerm(title);
-    setActive(false);
     setResults(filterAndSortResults(title, results));
+    setActive(false);
   };
 
   const shouldShowResults = results.length > 0 && !error;
@@ -83,7 +83,9 @@ const Autocomplete: React.FC<AutoCompleteProps> = ({
         placeholder={placeholderText}
         data-testid="autocomplete-input"
         onChange={handleInputChange}
-        onBlur={() => setActive(false)}
+        onBlur={() => {
+          setTimeout(() => setActive(false), 200);
+        }}
         value={term}
       />
 
